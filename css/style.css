@@ -1,0 +1,345 @@
+/* Modern Variable Definitions */
+:root {
+    --bg-color: #f4f6f9;
+    --panel-bg: #ffffff;
+    --text-primary: #333333;
+    --text-muted: #6c757d;
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --secondary-color: #e9ecef;
+    --secondary-hover: #d3d9df;
+    --border-color: #dee2e6;
+    --success-color: #28a745;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.app-header {
+    background: var(--panel-bg);
+    padding: 15px 30px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+.branding h1 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+.branding p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background: var(--panel-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.panel {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.panel h3 {
+    margin-top: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-primary);
+}
+.btn-secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+.block-btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.status-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: var(--secondary-color);
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--success-color);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.tab-nav {
+    flex: 1;
+}
+
+.tab-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tab-nav a {
+    display: block;
+    padding: 15px 20px;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab-nav a:hover {
+    background: var(--bg-color);
+}
+
+.tab-nav a.active {
+    background: #eef2f7;
+    border-left-color: var(--primary-color);
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.content-area {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.3s;
+}
+.tab-pane.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-top: 3px solid var(--primary-color);
+}
+
+.card h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.card .value {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.chart-wrapper {
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.toolbar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    background: var(--panel-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.data-table tr:hover {
+    background-color: var(--bg-color);
+}
+
+/* Modal specific styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.close-btn {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.setting-group {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.setting-label {
+    flex: 1;
+}
+
+.setting-label strong {
+    display: block;
+    font-size: 14px;
+}
+
+.setting-label span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.setting-input {
+    width: 80px;
+    padding: 6px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-align: right;
+}

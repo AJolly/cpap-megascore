@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaScore CPAP Analyzer</title>
+    <!-- Use Chart.js directly via CDN for vanilla JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!-- Link the CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="branding">
+                <h1>MegaScore CPAP Analyzer</h1>
+                <p>Advanced Ventilatory and Flow Limitation Analysis</p>
+            </div>
+            <div class="header-actions">
+                <button id="navSettingsBtn" class="btn btn-secondary">⚙️ Settings</button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Sidebar for file upload & navigation -->
+            <aside class="sidebar">
+                <div class="panel">
+                    <h3>Load Data</h3>
+                    <div class="upload-area">
+                        <label class="btn btn-primary block-btn">
+                            📁 Upload SD Card
+                            <input type="file" id="folderUpload" webkitdirectory multiple hidden>
+                        </label>
+                        <label class="btn btn-secondary block-btn" style="margin-top: 10px;">
+                            📄 Upload Files (.edf)
+                            <input type="file" id="fileUpload" multiple accept=".edf,.001,.002,.005" hidden>
+                        </label>
+                    </div>
+                    <div id="fileCount" class="status-text">No files selected</div>
+                    <div id="processingStatus" class="status-text"></div>
+                    <div class="progress-bar-container" style="display: none;" id="progressBarContainer">
+                        <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                </div>
+
+                <nav class="tab-nav">
+                    <ul>
+                        <li><a href="#" class="active" data-tab="dashboard">Dashboard</a></li>
+                        <li><a href="#" data-tab="heatmap">Night Heatmap</a></li>
+                        <li><a href="#" data-tab="flowgraph">Detailed Flow</a></li>
+                        <li><a href="#" data-tab="results">Results Table</a></li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Main Content Area -->
+            <section class="content-area">
+                <!-- Dashboard Tab -->
+                <div id="tab-dashboard" class="tab-pane active">
+                    <div class="summary-cards" id="summaryCardsContainer">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Heatmap Tab -->
+                <div id="tab-heatmap" class="tab-pane">
+                    <h2>Overall Night Heatmap</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="heatmapCanvas"></canvas>
+                    </div>
+                    <p class="help-text">Click on any segment in the heatmap to view the detailed flow graph for that period.</p>
+                </div>
+
+                <!-- Detailed Flow Graph Tab -->
+                <div id="tab-flowgraph" class="tab-pane">
+                    <div class="toolbar">
+                        <button id="btnPrevFlow" class="btn btn-secondary">◀ Prev Minute</button>
+                        <span id="flowTimeLabel" style="margin: 0 15px; font-weight: bold;">Select a time from heatmap</span>
+                        <button id="btnNextFlow" class="btn btn-secondary">Next Minute ▶</button>
+                    </div>
+                    <div class="chart-wrapper" style="height: 400px;">
+                        <!-- Container for dynamic flow charts -->
+                        <canvas id="detailFlowCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Results Table Tab -->
+                <div id="tab-results" class="tab-pane">
+                    <div class="toolbar">
+                        <button class="btn btn-primary" id="btnExportCSV">Export to CSV</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="resultsTable">
+                            <thead>
+                                <tr id="resultsTableHeader">
+                                    <!-- Populated dynamically based on registered plugins -->
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Analysis Parameter Settings</h2>
+                <span class="close-btn" id="closeSettingsBtn">&times;</span>
+            </div>
+            <div class="modal-body" id="settingsForm">
+                <p>These values are saved to your browser automatically and applied immediately to future analyses.</p>
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- The TYPE="MODULE" is what lets us use ES6 imports/exports in Vanilla JS! -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
