@@ -1,0 +1,63 @@
+
+Date	Start Time	End Time	Duration (hrs)	Machine Type	PAP Mode	Overall GI	Skew	Spike	Flat Top	Top Heavy	Multi Peak	No Pause	Inspir Rate	Multi Breath	Variable Amp	IPAP/MaxPS	Min IPAP	Max IPAP/Max EPAP	EPAP	Min EPAP	Max EPAP	PS / Min PS	EasyBreathe	Rise Time	Trigger	Cycle	Notes	Actions
+▼2026-02-172 sessions	2:19:55 AM	8:55:10 AM	6.3	Air Sense 10 Auto Set For Her	ASV (8)	1.54	0.22	0.06	0.08	0.18	0.05	0.32	0.06	0.11	0.46	18.8	N/A	18.8	5.4	4	N/A	10	N/A	N/A	N/A	N/A	-	-
+ 🛏️ Main
+20260218_021954_BRP.edf	2:19:54 AM	3:05:55 AM	0.8	Air Sense 10 Auto Set For Her	ASV (8)	2.45	0.17	0.04	0.00	0.39	0.09	0.81	0.28	0.03	0.64	18.8	-	18.8	5.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260218_032210_BRP.edf	3:22:10 AM	8:55:10 AM	5.5	Air Sense 10 Auto Set For Her	ASV (8)	1.41	0.23	0.06	0.09	0.15	0.05	0.25	0.03	0.12	0.43	18.8	-	18.8	5.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+▼2026-02-162 sessions	1:20:31 AM	11:47:52 AM	10.4	Air Sense 10 Auto Set For Her	ASV (8)	1.60	0.26	0.06	0.12	0.20	0.06	0.24	0.05	0.08	0.53	18.8	N/A	18.8	5.4	4	N/A	10	N/A	N/A	N/A	N/A	-	-
+ 🛏️ Main
+20260217_012030_BRP.edf	1:20:30 AM	7:51:31 AM	6.5	Air Sense 10 Auto Set For Her	ASV (8)	1.57	0.26	0.06	0.12	0.20	0.06	0.23	0.05	0.09	0.50	18.8	-	18.8	5.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260217_075452_BRP.edf	7:54:52 AM	11:47:52 AM	3.9	Air Sense 10 Auto Set For Her	ASV (8)	1.68	0.26	0.06	0.12	0.20	0.07	0.26	0.05	0.07	0.59	18.8	-	18.8	5.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+▼2026-02-152 sessions	2:43:09 AM	1:05:13 PM	10.4	Air Sense 10 Auto Set For Her	PAC (7)	1.56	0.29	0.12	0.12	0.11	0.12	0.14	0.03	0.09	0.54	14.2	N/A	N/A	5	N/A	N/A	9.2	On	N/A	very high	very high	-	-
+ 🛏️ Main
+20260216_024309_BRP.edf	2:43:09 AM	11:59:09 AM	9.3	Air Sense 10 Auto Set For Her	PAC (7)	1.54	0.28	0.12	0.13	0.11	0.12	0.13	0.03	0.09	0.53	14.2	-	-	5	-	-	9.2	On	N/A	very high	very high	-	-
+ 🚿 Break
+20260216_120013_BRP.edf	12:00:13 PM	1:05:13 PM	1.1	Air Sense 10 Auto Set For Her	PAC (7)	1.74	0.33	0.13	0.08	0.13	0.14	0.19	0.04	0.06	0.64	14.2	-	-	5	-	-	9.2	On	N/A	very high	very high	-	-
+▼2026-02-142 sessions	2:44:00 AM	1:01:08 PM	10.3	Air Sense 10 Auto Set For Her	PAC (7)	1.93	0.33	0.10	0.11	0.20	0.10	0.21	0.08	0.15	0.65	13.6	N/A	N/A	4	N/A	N/A	9.6	On	N/A	very high	very high	-	-
+ 🛏️ Main
+20260215_024359_BRP.edf	2:43:59 AM	12:00:00 PM	9.3	Air Sense 10 Auto Set For Her	PAC (7)	1.92	0.33	0.10	0.11	0.20	0.10	0.21	0.09	0.15	0.63	13.6	-	-	4	-	-	9.6	On	N/A	very high	very high	-	-
+ 🚿 Break
+20260215_120007_BRP.edf	12:00:07 PM	1:01:08 PM	1.0	Air Sense 10 Auto Set For Her	PAC (7)	2.05	0.35	0.11	0.09	0.21	0.11	0.19	0.03	0.14	0.82	13.6	-	-	4	-	-	9.6	On	N/A	very high	very high	-	-
+▼2026-02-134 sessions	3:31:39 AM	2:14:05 PM	10.6	Air Sense 10 Auto Set For Her	ASV (8)	2.14	0.27	0.06	0.35	0.35	0.09	0.22	0.05	0.24	0.51	11.8	N/A	11.8	5.2	4	N/A	10	N/A	N/A	N/A	N/A	-	-
+ 🛏️ Main
+20260214_033139_BRP.edf	3:31:39 AM	7:36:39 AM	4.1	Air Sense 10 Auto Set For Her	ASV (8)	2.27	0.27	0.07	0.38	0.33	0.10	0.19	0.04	0.35	0.54	11.8	-	11.8	5.2	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260214_073903_BRP.edf	7:39:03 AM	11:38:04 AM	4.0	Air Sense 10 Auto Set For Her	ASV (8)	2.11	0.25	0.06	0.40	0.35	0.10	0.23	0.07	0.21	0.44	11.8	-	11.8	5.2	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260214_114359_BRP.edf	11:43:59 AM	11:59:59 AM	0.3	Air Sense 10 Auto Set For Her	ASV (8)	1.94	0.27	0.05	0.16	0.51	0.12	0.33	0.01	0.03	0.46	11.8	-	11.8	5.2	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260214_120004_BRP.edf	12:00:04 PM	2:14:05 PM	2.2	Air Sense 10 Auto Set For Her	ASV (8)	2.01	0.30	0.04	0.23	0.36	0.07	0.25	0.05	0.12	0.59	11.8	-	11.8	5.2	4	-	10	N/A	N/A	N/A	N/A	-	-
+▼2026-02-122 sessions	7:12:24 AM	11:35:00 AM	4.3	Air Sense 10 Auto Set For Her	ASV (8)	2.03	0.27	0.12	0.30	0.22	0.12	0.18	0.03	0.22	0.57	10.6	N/A	10.6	5.4	4	N/A	10	N/A	N/A	N/A	N/A	-	-
+ 🛏️ Main
+20260213_071224_BRP.edf	7:12:24 AM	9:21:24 AM	2.1	Air Sense 10 Auto Set For Her	ASV (8)	2.20	0.31	0.16	0.27	0.20	0.14	0.21	0.04	0.29	0.58	10.6	-	10.6	5.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260213_092859_BRP.edf	9:28:59 AM	11:35:00 AM	2.1	Air Sense 10 Auto Set For Her	ASV (8)	1.80	0.22	0.07	0.33	0.24	0.09	0.14	0.01	0.15	0.55	10.6	-	10.6	5.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+▼2026-02-112 sessions	3:35:41 AM	11:31:05 AM	7.8	Air Sense 10 Auto Set For Her	ASV (8)	1.74	0.25	0.10	0.20	0.19	0.13	0.18	0.08	0.10	0.51	13.4	N/A	13.4	5.6	4	N/A	10	N/A	N/A	N/A	N/A	-	-
+ 🛏️ Main
+20260212_033540_BRP.edf	3:35:40 AM	3:38:41 AM	0.1	Air Sense 10 Auto Set For Her	ASV (8)	3.31	0.62	0.18	0.00	0.03	0.18	0.75	0.60	0.04	0.91	13.4	-	13.4	5.6	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260212_034405_BRP.edf	3:44:05 AM	11:31:05 AM	7.8	Air Sense 10 Auto Set For Her	ASV (8)	1.74	0.25	0.10	0.20	0.19	0.13	0.18	0.08	0.10	0.51	13.4	-	13.4	5.6	4	-	10	N/A	N/A	N/A	N/A	-	-
+▼2026-02-102 sessions	3:45:47 AM	11:52:58 AM	8.1	Air Sense 10 Auto Set For Her	ASV (8)	1.59	0.36	0.11	0.09	0.11	0.14	0.17	0.03	0.08	0.50	9.4	N/A	9.4	4.4	4	N/A	10	N/A	N/A	N/A	N/A	-	-
+ 🛏️ Main
+20260211_034546_BRP.edf	3:45:46 AM	10:14:47 AM	6.5	Air Sense 10 Auto Set For Her	ASV (8)	1.64	0.36	0.12	0.10	0.11	0.15	0.17	0.03	0.08	0.52	9.4	-	9.4	4.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260211_101657_BRP.edf	10:16:57 AM	11:52:58 AM	1.6	Air Sense 10 Auto Set For Her	ASV (8)	1.38	0.38	0.07	0.04	0.09	0.11	0.18	0.03	0.07	0.41	9.4	-	9.4	4.4	4	-	10	N/A	N/A	N/A	N/A	-	-
+▼2026-02-092 sessions	4:30:00 AM	11:48:30 AM	7.2	Air Sense 10 Auto Set For Her	AutoSet for Her (3)	1.58	0.25	0.19	0.09	0.13	0.15	0.14	0.04	0.03	0.56	16	N/A	N/A	4	N/A	N/A	12	N/A	N/A	N/A	N/A	-	-
+ 🛏️ Main
+20260210_042959_BRP.edf	4:29:59 AM	5:00:00 AM	0.5	Air Sense 10 Auto Set For Her	AutoSet for Her (3)	1.73	0.30	0.13	0.04	0.11	0.11	0.23	0.11	0.03	0.67	16	-	-	4	-	-	12	N/A	N/A	N/A	N/A	-	-
+ 🚿 Break
+20260210_050929_BRP.edf	5:09:29 AM	11:48:30 AM	6.7	Air Sense 10 Auto Set For Her	AutoSet for Her (3)	1.56	0.25	0.19	0.09	0.13	0.15	0.13	0.04	0.03	0.55	16	-	-	4	-	-	12	N/A	N/A	N/A	N/A	-	-
+2026-02-07	4:56:00 AM	11:49:00 AM	6.9	Air Sense 10 Auto Set For Her	VAuto (6)	1.33	0.29	0.14	0.03	0.09	0.13	0.12	0.03	0.03	0.47	16	N/A	25	8.6	N/A	N/A	8	Off	300	medium	medium	-	-
+2026-02-06	3:59:43 AM	11:51:43 AM	7.9	Air Sense 10 Auto Set For Her	VAuto (6)	1.25	0.25	0.06	0.06	0.27	0.08	0.13	0.05	0.01	0.34	16	N/A	25	8.6	N/A	N/A	8	Off	300	medium	medium	-	-
+2026-02-05	4:43:21 AM	11:56:21 AM	7.2	Air Sense 10 Auto Set For Her	Unknown	1.58	0.41	0.07	0.06	0.24	0.13	0.20	0.06	0.02	0.39	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+2026-02-04	1:56:47 AM	11:48:47 AM	9.9	Air Sense 10 Auto Set For Her	Unknown	1.46	0.32	0.05	0.10	0.31	0.09	0.19	0.11	0.01	0.28	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+2026-02-03	5:33:41 AM	11:49:41 AM	6.3	Air Sense 10 Auto Set For Her	Unknown	1.84	0.26	0.13	0.10	0.25	0.28	0.29	0.13	0.02	0.38	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+▶2026-02-023 sessions	2:38:35 AM	11:51:35 AM	9.1	Air Sense 10 Auto Set For Her	Unknown	2.13	0.31	0.27	0.07	0.21	0.38	0.24	0.16	0.02	0.47	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+▶2026-02-013 sessions	3:09:54 AM	11:48:18 AM	8.5	Air Sense 10 Auto Set For Her	Unknown	2.53	0.51	0.26	0.04	0.12	0.35	0.34	0.22	0.02	0.67	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+▶2026-01-312 sessions	2:53:05 AM	12:32:06 PM	9.6	Air Sense 10 Auto Set For Her	Unknown	2.46	0.44	0.27	0.07	0.17	0.41	0.34	0.27	0.02	0.47	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+▶2026-01-304 sessions	7:05:23 AM	12:44:06 PM	5.6	Air Sense 10 Auto Set For Her	Unknown	2.19	0.32	0.08	0.17	0.32	0.15	0.38	0.30	0.01	0.46	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+▶2026-01-294 sessions	5:40:46 AM	1:32:06 PM	7.2	Air Sense 10 Auto Set For Her	Unknown	2.23	0.35	0.16	0.11	0.22	0.28	0.31	0.10	0.05	0.65	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+▶2026-01-273 sessions	4:52:02 AM	1:09:05 PM	8.2	Air Sense 10 Auto Set For Her	Unknown	2.10	0.51	0.30	0.02	0.08	0.13	0.33	0.12	0.03	0.58	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
+▶2026-01-265 sessions	4:44:17 AM	10:09:40 AM	0.1	Air Sense 10 Auto Set For Her	Unknown	1.90	0.18	0.15	0.54	0.03	0.18	0.06	0.25	0.41	0.10	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	N/A	-	-
