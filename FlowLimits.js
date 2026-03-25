@@ -74,7 +74,7 @@ const TOP_THRESHOLD_PRECENT_90 = 0.9;
 const GREY_ZONE_UPPER = 5;
 
 // Look for the inspirations
-function findInspirations(dataArray, results) {
+function findInspirations(dataArray, results, pressureArray = null) {
 
 	results.inspirations = [];
 	let ignoreUntil = 0;
@@ -234,13 +234,26 @@ function findInspirations(dataArray, results) {
 		//Hold mid inspiration variance to two decimal places
 		inspirInstance.midVar = Math.round(100 * midVar / (0.5 * (inspirInstance.end - inspirInstance.start))) / 100;;
 
+		// If high-resolution mask pressure data is available, find the peak pressure during this inspiration
+		if (pressureArray && pressureArray.length > 0) {
+			let peakPressure = 0;
+			for (let ptr = inspirInstance.start; ptr < inspirInstance.end; ptr++) {
+				if (ptr < pressureArray.length && pressureArray[ptr].y > peakPressure) {
+					peakPressure = pressureArray[ptr].y;
+				}
+			}
+			inspirInstance.peakPressure = Math.round(peakPressure * 100) / 100;
+		} else {
+			inspirInstance.peakPressure = null;
+		}
+
 		results.inspirations.push(inspirInstance);
 		ignoreUntil = inspirInstance.end; // only process an inspiration instance once. Ignore multiple peaks at this stage.
 	}
 
 }
 
-function calcCycleBasedIndicators(dataArray, results) {
+function calcCycleBasedIndicators(dataArray, results, pressureArray = null) {
 	let nextInspirIndex = 0;
 	// Extrapolate 1 second into the future
 	const extrapolationSamples = Math.round(1000 / getMillisPerSample(dataArray));
@@ -265,7 +278,6 @@ function calcCycleBasedIndicators(dataArray, results) {
 		let emgyBreak = 10;
 		do {
 			if (emgyBreak-- <= 0) {
-				console.log("NOT SUPPOSED TO GET HERE");
 				break;
 			}
 			if (results.inspirations[nextInspirIndex].start < indexOfMin) {
@@ -277,25 +289,19 @@ function calcCycleBasedIndicators(dataArray, results) {
 				results.inspirations[nextInspirIndex].start > minsAtIndex[i + 1]) {
 				// "nextInspirIndex" starts after next min - move to next min...
 				break; // to next min
-			} else if (results.inspirations[nextInspirIndex].start >= indexOfMin) {
-				// The "nextInspirIndex" is after or at the min we are looking at. Link the two and determine relationship.
+			} else if (results.inspirations[nextInspirIndex].start > indexOfMin) {
+				// The "nextInspirIndex" is after the min we are looking at. Link the two and determine relationship.
 				results.inspirations[nextInspirIndex].noExhale = false;
 				results.inspirations[nextInspirIndex].linkedMinAt = indexOfMin;
 
 				let minValue = dataArray[indexOfMin].y;
-				if (minValue < 0) {
-					// We expect expiration flow to continue downward. Wait for 1 second. 
-					let minValuePlusOneSec = dataArray[indexOfMin + extrapolationSamples].y;
-					if (minValuePlusOneSec < minValue) {
-						// Expiration is proceeding normally (not complete 1s after peak). Extrapolate where it would intersect with X-axis to determine
-						// the generated "pre inspiration rest" / pause length.
-						let intersection = indexOfMin + Math.round(extrapolationSamples * minValue / (minValue - minValuePlusOneSec));
-						results.inspirations[nextInspirIndex].intersection = intersection;
-						results.inspirations[nextInspirIndex].preRest = results.inspirations[nextInspirIndex].start - intersection;
-					} else {
-						// inspiration started less than 1s after min. Set default preRest indicating problem (that's too fast for normal breathing).
-						results.inspirations[nextInspirIndex].preRest = -10;
-					}
+				let minValuePlusOneSec = dataArray[indexOfMin + extrapolationSamples].y;
+				if (minValuePlusOneSec < 0) {
+					// Expiration is proceeding normally (not complete 1s after peak). Extrapolate where it would intersect with X-axis to determine
+					// the generated "pre inspiration rest" / pause length.
+					let intersection = indexOfMin + Math.round(extrapolationSamples * minValue / (minValue - minValuePlusOneSec));
+					results.inspirations[nextInspirIndex].intersection = intersection;
+					results.inspirations[nextInspirIndex].preRest = results.inspirations[nextInspirIndex].start - intersection;
 				} else {
 					// inspiration started less than 1s after min. Set default preRest indicating problem (that's too fast for normal breathing).
 					results.inspirations[nextInspirIndex].preRest = -10;
@@ -508,7 +514,7 @@ function prepIndices(results) {
 	cumIndex.inspirRate = Math.round(100 * cumIndex.inspirRate / results.inspirations.length) / 100;
 	cumIndex.multiBreath = Math.round(100 * cumIndex.multiBreath / results.inspirations.length) / 100;
 	cumIndex.ampVar = Math.round(100 * cumIndex.ampVar / results.inspirations.length) / 100;
-	cumIndex.overall = Math.round(100 * (cumIndex.skew + cumIndex.flatTop + cumIndex.spike + cumIndex.multiPeak + cumIndex.noPause +
+	cumIndex.overall = Math.round(100 * (cumIndex.skew + cumIndex.flatTop + cumIndex.topHeavy + cumIndex.spike + cumIndex.multiPeak + cumIndex.noPause +
 		cumIndex.inspirRate + cumIndex.multiBreath + cumIndex.ampVar)) / 100;
 
 	return cumIndex;
@@ -938,6 +944,45 @@ function showDetailOneMinute(dataArray, results, samplePos) {
 	// obtain the flow data
 	let flowData = dataArray.slice(startPtr, endPtr);
 	let idealData = results.idealArray.slice(startPtr, endPtr);
+	
+	let chartDatasets = [{
+		label: 'Flow Rate (l/min)',
+		data: flowData,
+		pointStyle: false,
+		borderColor: '#1b1e7a',
+		borderWidth: 2,
+		yAxisID: 'y',
+	}, {
+		label: 'Idealized',
+		data: idealData,
+		pointStyle: false,
+		borderColor: '#f21e0f',
+		borderWidth: 1,
+		yAxisID: 'y',
+	}];
+
+	let pressureAxis = {};
+	if (results.pressureData && results.pressureData.length > 0) {
+		let pressureDataSlice = results.pressureData.slice(startPtr, endPtr);
+		chartDatasets.push({
+			label: 'Mask Pressure',
+			data: pressureDataSlice,
+			pointStyle: false,
+			borderColor: '#00cc66',
+			borderWidth: 1.5,
+			yAxisID: 'yPressure'
+		});
+		pressureAxis = {
+			yPressure: {
+				type: 'linear',
+				display: true,
+				position: 'right',
+				min: 0,
+				max: 20, // Typical pressure range
+				grid: { drawOnChartArea: false }, // Prevent gridline overlap
+			}
+		};
+	}
 
 	// prepare the chart for display
 	const ctx = document.getElementById('chartDetail');
@@ -945,27 +990,56 @@ function showDetailOneMinute(dataArray, results, samplePos) {
 	chartDetail = new Chart(ctx, {
 		type: 'line',
 		data: {
-			datasets: [{
-				label: 'Flow Rate (l/min)',
-				data: flowData,
-				pointStyle: false,
-				borderColor: '#1b1e7a',
-				borderWidth: 2,
-			}, {
-				label: 'Idealized',
-				data: idealData,
-				pointStyle: false,
-				borderColor: '#f21e0f',
-				borderWidth: 1,
-			}],
+			datasets: chartDatasets,
 		},
 		options: {
 			maintainAspectRatio: false,
+			onClick: (event, elements, chart) => {
+				if (!elements || elements.length === 0) return;
+				
+				// Calculate the index in the original dataArray
+				const dataIndex = elements[0].index;
+				const actualDataIndex = startPtr + dataIndex;
+				
+				// Find the corresponding breath (inspiration)
+				const inspiration = results.inspirations.find(i => actualDataIndex >= i.start && actualDataIndex <= i.end);
+				if (inspiration) {
+					const timeStr = formatTimeWithAMPM(new Date(dataArray[actualDataIndex].x));
+					let msg = `Breath Details at ${timeStr}\n\n`;
+					msg += `GI Score: ${inspiration.indices?.overall || '0'}\n`;
+					
+					// Add flagged characteristics
+					const flags = [];
+					if (inspiration.indices?.skew) flags.push("Skewed");
+					if (inspiration.indices?.topHeavy) flags.push("Top Heavy");
+					if (inspiration.indices?.flatTop) flags.push("Flat Top");
+					if (inspiration.indices?.spike) flags.push("Spike");
+					if (inspiration.indices?.multiPeak) flags.push("Double Peak");
+					if (inspiration.indices?.noPause) flags.push("No Pause");
+					if (inspiration.indices?.inspirRate) flags.push("High Inspir Rate");
+					if (inspiration.indices?.multiBreath) flags.push("Double Insp");
+					if (inspiration.indices?.ampVar) flags.push("Variable Amp");
+					
+					if (flags.length > 0) {
+						msg += `Flags: ${flags.join(', ')}\n`;
+					}
+					
+					if (inspiration.peakPressure !== undefined && inspiration.peakPressure !== null) {
+						msg += `Peak Pressure: ${inspiration.peakPressure} cmH2O\n`;
+					}
+					
+					alert(msg);
+				}
+			},
 			scales: {
 				y: {
+					type: 'linear',
+					display: true,
+					position: 'left',
 					min: -40,
 					max: 40,
 				},
+				...pressureAxis,
 				x: {
 					type: 'timeseries',
 					ticks: {
