@@ -5,13 +5,11 @@ REFERENCE: Use OSCAR source code (https://gitlab.com/CrimsonNape/OSCAR-code as r
 AGENTS: Document everything thoroughly as you go. Every function, every data format, every parsing decision. Write docs for yourself and future agents. This codebase is worked on by multiple AI agents across conversations.
 
 
-3)
-
+work on index.html - megascore.html is the old implementation. 
 
 Custom session filtering options.  
 Remove the show individual sessions button its redundant. 
 add the combine sessions.
-combine with my hr scoring - https://github.com/AJolly/O2RingCloudDownloader 
 Night heatmap needs to show times
 Night heatmap flow graph shows times dont line up with flow graph times? iits weirdly off check why
 add a time offset correction per cpap machine.
@@ -36,3 +34,6 @@ auto open flow map on load so users see that.
 
 MAKE NOPTE THAT WE ARE USING RELATIVE SCORING, PERHAPS HAVE AN ABSOLUTE SCORING OPTION?  
 is our flow graph artificially smoothing the data?
+
+
+combine with my hr scoring - https://github.com/AJolly/O2RingCloudDownloader 

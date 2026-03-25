@@ -1,0 +1,284 @@
+{
+    "sessions": {
+        "20260218_021954_BRP+20260218_032210_BRP": {
+            "sleepDisruption": 85.4,
+            "flowLimitation": 57.8,
+            "regularity": 93.7,
+            "periodicity": 33.9,
+            "eai": 108.9,
+            "duration": 6.3
+        },
+        "20260217_075452_BRP": {
+            "sleepDisruption": 96.7,
+            "flowLimitation": 57.4,
+            "regularity": 88.1,
+            "periodicity": 33.9,
+            "eai": 133.6,
+            "duration": 3.9
+        },
+        "20260217_012030_BRP": {
+            "sleepDisruption": 87.1,
+            "flowLimitation": 56.5,
+            "regularity": 92.4,
+            "periodicity": 28.6,
+            "eai": 115.1,
+            "duration": 6.5
+        },
+        "20260216_120013_BRP": {
+            "sleepDisruption": 98.3,
+            "flowLimitation": 55.5,
+            "regularity": 74.0,
+            "periodicity": 28.2,
+            "eai": 144.0,
+            "duration": 1.1
+        },
+        "20260216_024309_BRP": {
+            "sleepDisruption": 97.6,
+            "flowLimitation": 55.3,
+            "regularity": 87.1,
+            "periodicity": 29.0,
+            "eai": 138.0,
+            "duration": 9.3
+        },
+        "20260215_120007_BRP": {
+            "sleepDisruption": 106.7,
+            "flowLimitation": 57.0,
+            "regularity": 79.0,
+            "periodicity": 26.0,
+            "eai": 159.3,
+            "duration": 1.0
+        },
+        "20260215_024359_BRP": {
+            "sleepDisruption": 95.0,
+            "flowLimitation": 55.9,
+            "regularity": 82.7,
+            "periodicity": 32.7,
+            "eai": 132.8,
+            "duration": 9.3
+        },
+        "20260214_120004_BRP": {
+            "sleepDisruption": 121.5,
+            "flowLimitation": 59.1,
+            "regularity": 66.4,
+            "periodicity": 37.7,
+            "eai": 188.5,
+            "duration": 2.2
+        },
+        "20260214_073903_BRP": {
+            "sleepDisruption": 115.8,
+            "flowLimitation": 60.1,
+            "regularity": 72.3,
+            "periodicity": 35.4,
+            "eai": 175.7,
+            "duration": 4.0
+        },
+        "20260214_033139_BRP": {
+            "sleepDisruption": 99.1,
+            "flowLimitation": 57.8,
+            "regularity": 86.5,
+            "periodicity": 35.4,
+            "eai": 138.4,
+            "duration": 4.1
+        },
+        "20260213_092859_BRP": {
+            "sleepDisruption": 108.3,
+            "flowLimitation": 57.7,
+            "regularity": 78.7,
+            "periodicity": 36.6,
+            "eai": 159.0,
+            "duration": 2.1
+        },
+        "20260213_071224_BRP": {
+            "sleepDisruption": 99.2,
+            "flowLimitation": 57.3,
+            "regularity": 91.6,
+            "periodicity": 34.5,
+            "eai": 137.2,
+            "duration": 2.1
+        },
+        "20260212_034405_BRP": {
+            "sleepDisruption": 115.1,
+            "flowLimitation": 58.0,
+            "regularity": 83.9,
+            "periodicity": 29.6,
+            "eai": 172.9,
+            "duration": 7.8
+        },
+        "20260211_101657_BRP": {
+            "sleepDisruption": 126.9,
+            "flowLimitation": 58.5,
+            "regularity": 77.5,
+            "periodicity": 36.8,
+            "eai": 196.3,
+            "duration": 1.6
+        },
+        "20260211_034546_BRP": {
+            "sleepDisruption": 129.4,
+            "flowLimitation": 57.4,
+            "regularity": 83.0,
+            "periodicity": 48.1,
+            "eai": 196.0,
+            "duration": 6.5
+        },
+        "20260210_042959_BRP+20260210_050929_BRP": {
+            "sleepDisruption": 127.5,
+            "flowLimitation": 55.9,
+            "regularity": 77.8,
+            "periodicity": 36.1,
+            "eai": 198.3,
+            "duration": 7.2
+        },
+        "20260208_045559_BRP": {
+            "sleepDisruption": 122.9,
+            "flowLimitation": 54.4,
+            "regularity": 62.5,
+            "periodicity": 34.8,
+            "eai": 195.3,
+            "duration": 6.9
+        },
+        "20260207_035943_BRP": {
+            "sleepDisruption": 122.5,
+            "flowLimitation": 58.3,
+            "regularity": 65.0,
+            "periodicity": 32.6,
+            "eai": 193.0,
+            "duration": 7.9
+        },
+        "20260206_044320_BRP": {
+            "sleepDisruption": 132.4,
+            "flowLimitation": 60.9,
+            "regularity": 67.3,
+            "periodicity": 36.9,
+            "eai": 209.8,
+            "duration": 7.2
+        },
+        "20260205_015646_BRP": {
+            "sleepDisruption": 133.3,
+            "flowLimitation": 61.5,
+            "regularity": 72.1,
+            "periodicity": 33.0,
+            "eai": 211.0,
+            "duration": 9.9
+        },
+        "20260204_053341_BRP": {
+            "sleepDisruption": 136.1,
+            "flowLimitation": 62.7,
+            "regularity": 74.7,
+            "periodicity": 29.8,
+            "eai": 216.5,
+            "duration": 6.3
+        },
+        "20260203_055535_BRP": {
+            "sleepDisruption": 133.8,
+            "flowLimitation": 62.4,
+            "regularity": 53.5,
+            "periodicity": 35.5,
+            "eai": 217.1,
+            "duration": 5.9
+        },
+        "20260203_023835_BRP": {
+            "sleepDisruption": 142.2,
+            "flowLimitation": 62.9,
+            "regularity": 85.5,
+            "periodicity": 57.4,
+            "eai": 215.8,
+            "duration": 3.2
+        },
+        "20260202_095717_BRP": {
+            "sleepDisruption": 135.6,
+            "flowLimitation": 57.1,
+            "regularity": 72.2,
+            "periodicity": 33.9,
+            "eai": 216.8,
+            "duration": 1.9
+        },
+        "20260202_065801_BRP": {
+            "sleepDisruption": 134.4,
+            "flowLimitation": 57.5,
+            "regularity": 70.1,
+            "periodicity": 36.2,
+            "eai": 214.1,
+            "duration": 2.9
+        },
+        "20260202_030953_BRP": {
+            "sleepDisruption": 135.5,
+            "flowLimitation": 60.0,
+            "regularity": 72.9,
+            "periodicity": 34.9,
+            "eai": 215.0,
+            "duration": 3.7
+        },
+        "20260201_120005_BRP": {
+            "sleepDisruption": 134.2,
+            "flowLimitation": 53.2,
+            "regularity": 53.0,
+            "periodicity": 40.6,
+            "eai": 219.4,
+            "duration": 0.53
+        },
+        "20260201_025305_BRP": {
+            "sleepDisruption": 137.1,
+            "flowLimitation": 61.0,
+            "regularity": 75.0,
+            "periodicity": 32.0,
+            "eai": 218.2,
+            "duration": 9.1
+        },
+        "20260131_120006_BRP": {
+            "sleepDisruption": 132.9,
+            "flowLimitation": 63.0,
+            "regularity": 72.8,
+            "periodicity": 31.9,
+            "eai": 210.0,
+            "duration": 0.73
+        },
+        "20260131_071343_BRP": {
+            "sleepDisruption": 135.1,
+            "flowLimitation": 63.6,
+            "regularity": 84.5,
+            "periodicity": 37.0,
+            "eai": 208.5,
+            "duration": 4.8
+        },
+        "20260130_194035_BRP": {
+            "sleepDisruption": 134.0,
+            "flowLimitation": 63.4,
+            "regularity": 67.5,
+            "periodicity": 35.5,
+            "eai": 212.5,
+            "duration": 1.0
+        },
+        "20260130_111634_BRP+20260130_120005_BRP": {
+            "sleepDisruption": 136.1,
+            "flowLimitation": 59.0,
+            "regularity": 72.9,
+            "periodicity": 35.3,
+            "eai": 216.4,
+            "duration": 2.3
+        },
+        "20260130_054046_BRP+20260130_063153_BRP": {
+            "sleepDisruption": 132.7,
+            "flowLimitation": 60.2,
+            "regularity": 83.6,
+            "periodicity": 32.5,
+            "eai": 206.7,
+            "duration": 5.0
+        },
+        "20260128_102141_BRP+20260128_120005_BRP": {
+            "sleepDisruption": 99.6,
+            "flowLimitation": 58.0,
+            "regularity": 89.3,
+            "periodicity": 34.3,
+            "eai": 138.7,
+            "duration": 2.8
+        },
+        "20260128_045201_BRP": {
+            "sleepDisruption": 112.2,
+            "flowLimitation": 59.4,
+            "regularity": 88.9,
+            "periodicity": 33.7,
+            "eai": 163.8,
+            "duration": 5.4
+        }
+    }
+}

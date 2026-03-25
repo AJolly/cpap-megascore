@@ -343,3 +343,21 @@ body {
     border-radius: 4px;
     text-align: right;
 }
+
+/* GI Component Formats */
+.gi-value {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0px 1px 1px rgba(0,0,0,0.3);
+    min-width: 35px;
+    text-align: center;
+}
+
+.gi-excellent { background-color: #28a745; } /* Green */
+.gi-good { background-color: #5cb85c; }      /* Light Green */
+.gi-fair { background-color: #ffc107; color: #333; text-shadow: none; } /* Yellow */
+.gi-poor { background-color: #fd7e14; }      /* Orange */
+.gi-very-poor { background-color: #dc3545; } /* Red */

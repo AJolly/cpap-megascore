@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 /**
  * Unified EDF Parser
  * Merges functionalities from Wobble's edfParser and Dave's EDFFile.js.
@@ -6,7 +8,7 @@
  * Returns robust metadata and a map of signal labels -> physical value arrays.
  */
 
-export const EDFParser = {
+window.EDFParser = {
 
     /**
      * Parse an ArrayBuffer of an EDF file.
@@ -139,5 +141,43 @@ export const EDFParser = {
             signals: signals,
             flowSignal: flowSignal || null
         };
+    },
+
+    /**
+     * Convert EDFParser.parse() output into the {x, y} dataArray format
+     * used by the Glasgow Index analysis functions.
+     * 
+     * @param {Object} parsed - Output from EDFParser.parse()
+     * @returns {Object} { dataArray, startDateTime, samplingRate }
+     */
+    toGlasgowFormat(parsed) {
+        if (!parsed || !parsed.flowSignal) {
+            return { dataArray: [], startDateTime: null, samplingRate: 0 };
+        }
+
+        const flow = parsed.flowSignal;
+        const millisPerSample = 1000 / flow.samplingRate;
+        const startDate = new Date(parsed.metadata.recordingDate);
+        const dataArray = [];
+
+        for (let i = 0; i < flow.physicalValues.length; i++) {
+            const t = new Date(startDate.getTime() + i * millisPerSample);
+            const h = String(t.getHours()).padStart(2, '0');
+            const m = String(t.getMinutes()).padStart(2, '0');
+            const s = String(t.getSeconds()).padStart(2, '0');
+            const ms = String(t.getMilliseconds()).padStart(3, '0');
+            dataArray.push({
+                x: `${h}:${m}:${s}.${ms}`,
+                y: flow.physicalValues[i]
+            });
+        }
+
+        return {
+            dataArray,
+            startDateTime: startDate,
+            samplingRate: flow.samplingRate
+        };
     }
 };
+
+})();
