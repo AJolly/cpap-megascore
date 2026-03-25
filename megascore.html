@@ -715,10 +715,10 @@
         function showDetailSection() {
             const section = document.getElementById('detailChartSection');
             if (section) section.style.display = 'block';
-            // Update time label
-            if (window.startDateTime && window.dataArray) {
-                const sampleMs = detailSampleSelected * MILLIS_PER_SAMPLE;
-                const t = new Date(window.startDateTime.getTime() + sampleMs);
+            // Update time label using actual timestamp from dataArray
+            if (window.dataArray && window.dataArray.length > 0) {
+                const idx = Math.max(0, Math.min(detailSampleSelected, window.dataArray.length - 1));
+                const t = new Date(window.dataArray[idx].x.replace(' ', 'T'));
                 const label = document.getElementById('detailTimeLabel');
                 if (label) label.textContent = t.toLocaleTimeString();
             }

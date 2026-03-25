@@ -594,7 +594,8 @@ function displayHeatMap(results) {
 
 	// Calculate end time from sample count
 	let sampleCnt = results.inspirations.length > 0 ? results.inspirations[results.inspirations.length - 1].end : 0;
-	let endDateTime = new Date(startDateTime.getTime() + sampleCnt * getMillisPerSample(window.dataArray));
+	let endSampleIndex = Math.min(sampleCnt, window.dataArray.length - 1);
+	let endDateTime = new Date(window.dataArray[Math.max(0, endSampleIndex)].x.replace(' ', 'T'));
 	const startTimeStr = formatTimeWithAMPM(startDateTime);
 	const endTimeStr = formatTimeWithAMPM(endDateTime);
 
@@ -622,80 +623,79 @@ function displayHeatMap(results) {
 	// prepare the geometry of the heat map area.
 	let left = 150;  // start of the heat map area
 	let rightEdge = chartTop.width - 10; // right limit of the heat map area that can be used
-	let dataLen = results.inspirations.length; // one many inspirations need to be summarized
-
-	let perCell = Math.ceil(dataLen / (rightEdge - left));  // number of inspiration per "cell" / pixel
-	let noCells = Math.round(dataLen / perCell); // number of "cells" / pixels
+	
+	let totalSamples = sampleCnt; // total time in samples
+	let smplPerCell = Math.ceil(totalSamples / (rightEdge - left)); // samples per pixel
+	let noCells = Math.round(totalSamples / smplPerCell); // number of "cells" / pixels
 	let right = left + noCells;  // actual right limit that will be used
 
 	// output the hours at the top of the canvas (below the title).
 	outputHoursText(ctx, startDateTime, sampleCnt, 35, left, right);
 
-	let ptr = perCell;
 	let nextCell = { skew: 0, flatTop: 0, topHeavy: 0, spike: 0, multiPeak: 0, noPause: 0, inspirRate: 0, multiBreath: 0, ampVar: 0, overall: 0 };
 	let cellCnt = 0;
+	let currentCellEnd = smplPerCell;
+	let cellInspirations = 0;
+
 	for (let i = 0; i < results.inspirations.length; i++) {
-		// add each inspiration's data to the cell
-		if (results.inspirations[i].indices.skew === true) {
-			nextCell.skew++;
-		}
-		if (results.inspirations[i].indices.flatTop === true) {
-			nextCell.flatTop++;
-		}
-		if (results.inspirations[i].indices.topHeavy === true) {
-			nextCell.topHeavy++;
-		}
-		if (results.inspirations[i].indices.spike === true) {
-			nextCell.spike++;
-		}
-		if (results.inspirations[i].indices.multiPeak === true) {
-			nextCell.multiPeak++;
-		}
-		if (results.inspirations[i].indices.noPause === true) {
-			nextCell.noPause++;
-		}
-		if (results.inspirations[i].indices.inspirRate === true) {
-			nextCell.inspirRate++;
-		}
-		if (results.inspirations[i].indices.multiBreath === true) {
-			nextCell.multiBreath++;
-		}
-		if (results.inspirations[i].indices.ampVar === true) {
-			nextCell.ampVar++;
-		}
-		if (results.inspirations[i].indices.overall > 0) {
-			nextCell.overall += results.inspirations[i].indices.overall;
-		}
-		ptr--;
+		let insp = results.inspirations[i];
 
-		if (ptr === 0) {
+		while (insp.start >= currentCellEnd) {
 			// once the cell data is complete, generate the averages
-			nextCell.skew = nextCell.skew / perCell;
-			nextCell.flatTop = nextCell.flatTop / perCell;
-			nextCell.topHeavy = nextCell.topHeavy / perCell;
-			nextCell.spike = nextCell.spike / perCell;
-			nextCell.multiPeak = nextCell.multiPeak / perCell;
-			nextCell.noPause = nextCell.noPause / perCell;
-			nextCell.inspirRate = nextCell.inspirRate / perCell;
-			nextCell.multiBreath = nextCell.multiBreath / perCell;
-			nextCell.ampVar = nextCell.ampVar / perCell;
-			nextCell.overall = nextCell.overall / perCell;
+			if (cellInspirations > 0) {
+				nextCell.skew = nextCell.skew / cellInspirations;
+				nextCell.flatTop = nextCell.flatTop / cellInspirations;
+				nextCell.topHeavy = nextCell.topHeavy / cellInspirations;
+				nextCell.spike = nextCell.spike / cellInspirations;
+				nextCell.multiPeak = nextCell.multiPeak / cellInspirations;
+				nextCell.noPause = nextCell.noPause / cellInspirations;
+				nextCell.inspirRate = nextCell.inspirRate / cellInspirations;
+				nextCell.multiBreath = nextCell.multiBreath / cellInspirations;
+				nextCell.ampVar = nextCell.ampVar / cellInspirations;
+				nextCell.overall = nextCell.overall / cellInspirations;
 
-			// display the cell's data on the canvas
-			outputIndicesLine(ctx, nextCell, left + cellCnt);
+				// display the cell's data on the canvas
+				outputIndicesLine(ctx, nextCell, left + cellCnt);
+			}
+			
 			cellCnt++;
-
+			currentCellEnd += smplPerCell;
 			// reset the cell data and move onto the next cell
 			nextCell = { skew: 0, flatTop: 0, topHeavy: 0, spike: 0, multiPeak: 0, noPause: 0, inspirRate: 0, multiBreath: 0, ampVar: 0, overall: 0 };
-			ptr = perCell;
+			cellInspirations = 0;
 		}
+
+		// add each inspiration's data to the cell
+		if (insp.indices.skew === true) nextCell.skew++;
+		if (insp.indices.flatTop === true) nextCell.flatTop++;
+		if (insp.indices.topHeavy === true) nextCell.topHeavy++;
+		if (insp.indices.spike === true) nextCell.spike++;
+		if (insp.indices.multiPeak === true) nextCell.multiPeak++;
+		if (insp.indices.noPause === true) nextCell.noPause++;
+		if (insp.indices.inspirRate === true) nextCell.inspirRate++;
+		if (insp.indices.multiBreath === true) nextCell.multiBreath++;
+		if (insp.indices.ampVar === true) nextCell.ampVar++;
+		if (insp.indices.overall > 0) nextCell.overall += insp.indices.overall;
+		cellInspirations++;
+	}
+	
+	// Print last cell if data was collected
+	if (cellInspirations > 0) {
+		nextCell.skew = nextCell.skew / cellInspirations;
+		nextCell.flatTop = nextCell.flatTop / cellInspirations;
+		nextCell.topHeavy = nextCell.topHeavy / cellInspirations;
+		nextCell.spike = nextCell.spike / cellInspirations;
+		nextCell.multiPeak = nextCell.multiPeak / cellInspirations;
+		nextCell.noPause = nextCell.noPause / cellInspirations;
+		nextCell.inspirRate = nextCell.inspirRate / cellInspirations;
+		nextCell.multiBreath = nextCell.multiBreath / cellInspirations;
+		nextCell.ampVar = nextCell.ampVar / cellInspirations;
+		nextCell.overall = nextCell.overall / cellInspirations;
+		outputIndicesLine(ctx, nextCell, left + cellCnt);
 	}
 
 	// output the flow balance anomalys
-	outputFlowAnomaly(ctx, left, perCell, 320);
-
-	var elemLeft = chartTop.offsetLeft + chartTop.clientLeft;
-	var elemTop = chartTop.offsetTop + chartTop.clientTop;
+	outputFlowAnomaly(ctx, left, smplPerCell, 320);
 
 	if (typeof chartDetail !== 'undefined' && chartDetail != null) {
 		//when displaying the top canvas, clear the lower graph area (and scroll buttons)
@@ -704,15 +704,20 @@ function displayHeatMap(results) {
 
 	//Add event listener for `click` events.
 	chartTop.addEventListener('click', function (event) {
-		var x = event.pageX - elemLeft;  //      y = event.pageY - elemTop;
+		const rect = chartTop.getBoundingClientRect();
+		const x = event.clientX - rect.left;
+		
 		if (x < left || x > right) {
 			// only process clicks within the coloured "cell" area
 			return;
 		}
 
 		// determine how far left/right was clicked and display the flow graph of the appropraite time
-		var instanceIndex = Math.trunc(((x - left) / noCells) * results.inspirations.length);
-		showDetailOneMinute(dataArray, results, results.inspirations[instanceIndex].start);
+		const fraction = (x - left) / noCells;
+		let targetIndex = Math.floor(fraction * sampleCnt);
+		targetIndex = Math.max(0, Math.min(targetIndex, window.dataArray.length - 1));
+		
+		showDetailOneMinute(dataArray, results, targetIndex);
 	}, false);
 
 	// Store heatmap geometry for tooltip calculations
@@ -721,9 +726,7 @@ function displayHeatMap(results) {
 		right: right,
 		noCells: noCells,
 		sampleCnt: sampleCnt,
-		startDateTime: startDateTime,
-		inspirations: results.inspirations,
-		perCell: perCell
+		startDateTime: startDateTime
 	};
 
 	// Create or get tooltip element
@@ -763,14 +766,15 @@ function heatmapMouseMoveHandler(event) {
 
 	// Calculate which inspiration/sample we're over
 	const fraction = (x - geo.left) / geo.noCells;
-	const sampleIndex = Math.floor(fraction * geo.sampleCnt);
+	let targetIndex = Math.floor(fraction * geo.sampleCnt);
+	targetIndex = Math.max(0, Math.min(targetIndex, window.dataArray.length - 1));
 
 	// Calculate the time at this position
-	const timeAtPosition = new Date(geo.startDateTime.getTime() + sampleIndex * getMillisPerSample(window.dataArray));
+	const timeAtPosition = new Date(window.dataArray[targetIndex].x.replace(' ', 'T'));
 	const timeStr = formatTimeWithAMPM(timeAtPosition);
 
 	// Calculate elapsed time from start
-	const elapsedMs = sampleIndex * getMillisPerSample(window.dataArray);
+	const elapsedMs = timeAtPosition.getTime() - geo.startDateTime.getTime();
 	const elapsedHours = Math.floor(elapsedMs / (1000 * 60 * 60));
 	const elapsedMins = Math.floor((elapsedMs % (1000 * 60 * 60)) / (1000 * 60));
 	const elapsedStr = elapsedHours + 'h ' + elapsedMins + 'm';
@@ -815,27 +819,49 @@ function formatHourAMPM(hour24) {
 
 // Output the hours texts at the top of the canvas
 function outputHoursText(ctx, startDateTime, sampleCnt, pixelHeight, leftPx, rightPx) {
+	if (!window.dataArray || window.dataArray.length === 0) return;
+	
 	let startHour = startDateTime.getHours();
-	let endTime = new Date(startDateTime.getTime() + sampleCnt * getMillisPerSample(window.dataArray));
-	if (startDateTime.getHours() === endTime.getHours()) {// don't attempt to output if the data does not cross an hour boundary
+	let endSampleIndex = Math.min(sampleCnt > 0 ? sampleCnt - 1 : 0, window.dataArray.length - 1);
+	let endTime = new Date(window.dataArray[endSampleIndex].x.replace(' ', 'T'));
+	
+	if (startDateTime.getHours() === endTime.getHours() && startDateTime.getDate() === endTime.getDate()) {
+		// don't attempt to output if the data does not cross an hour boundary
 		return;
 	}
+	
 	// the start time will not be output. We need to work out the first hour boundary after the start time.
 	let startTimeISOStr = startDateTime.toISOString();
 	let previousHourISOStr = startTimeISOStr.substring(0, 13) + ":00:00.000";
 	let previousHour = new Date(previousHourISOStr);
 	let nextHour = new Date(previousHour.getTime() + 3600000);   //add an hour - gives the first hour after start of recording
 
-	fieldWidthPixel = rightPx - leftPx;
+	let fieldWidthPixel = rightPx - leftPx;
 
-	let outHours = [];
-	while (nextHour.getTime() < endTime.getTime()) {  // exit if we've gone over the end time
-		// Determine how many SAMPLES from the start the next hour boundary is
-		let nextHourSampleCnt = (nextHour.getTime() - startDateTime.getTime()) / getMillisPerSample(window.dataArray);
-		// Use the sample could to determine the pixel location
-		let pixelLoc = leftPx + Math.round((nextHourSampleCnt / sampleCnt) * fieldWidthPixel) - 20;
-		// output the hour text in AM/PM format
-		ctx.fillText(formatHourAMPM(nextHour.getHours()), pixelLoc, pixelHeight);
+	while (nextHour.getTime() <= endTime.getTime()) {  // exit if we've gone over the end time
+		// Binary search to find the index of the first sample >= nextHour
+		let low = 0;
+		let high = endSampleIndex;
+		let nextHourSampleCnt = endSampleIndex;
+		
+		while(low <= high) {
+			let mid = Math.floor((low + high) / 2);
+			let midTime = new Date(window.dataArray[mid].x.replace(' ', 'T')).getTime();
+			if (midTime < nextHour.getTime()) {
+				low = mid + 1;
+			} else {
+				nextHourSampleCnt = mid;
+				high = mid - 1;
+			}
+		}
+
+		if (nextHourSampleCnt <= endSampleIndex) {
+			// Use the sample index to determine the pixel location
+			let pixelLoc = leftPx + Math.round((nextHourSampleCnt / sampleCnt) * fieldWidthPixel) - 20;
+			// output the hour text in AM/PM format
+			ctx.fillText(formatHourAMPM(nextHour.getHours()), pixelLoc, pixelHeight);
+		}
+		
 		// move onto the next hour boundary
 		nextHour = new Date(nextHour.getTime() + 3600000);   //add an hour
 	}
@@ -848,7 +874,7 @@ function outputFlowAnomaly(ctx, leftPx, smplPerCell, heightPx) {
 	ctx.lineWidth = 3;
 	for (let i = 0; i < results.flowImbalance.length; i++) {
 		// put a black line in the overview heat map where the flow in and out were not balanced
-		let linePx = leftPx + Math.round(results.flowImbalance[i].inspirPtr / smplPerCell) - 1;
+		let linePx = leftPx + Math.round(results.flowImbalance[i].start / smplPerCell) - 1;
 
 		ctx.beginPath();
 		ctx.moveTo(linePx, heightPx);
