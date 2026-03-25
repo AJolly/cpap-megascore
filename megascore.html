@@ -1452,6 +1452,7 @@
 
                     // Run Glasgow Index analysis
                     const results = {};
+                    results.pressureData = pressureDataArray;
                     findMins(dataArray);
                     findInspirations(dataArray, results, pressureDataArray);
                     calcCycleBasedIndicators(dataArray, results, pressureDataArray);
@@ -1987,6 +1988,7 @@
             // Build concatenated dataArray from session flow data for click-to-inspect
             const allFlowData = [];
             const allIdealData = [];
+            const allPressureData = [];
             sessions.forEach(session => {
                 if (session.flowData && session.flowData.length > 0) {
                     for (let j = 0; j < session.flowData.length; j++) {
@@ -1997,18 +1999,29 @@
                             allIdealData.push(session.idealData[j]);
                         }
                     }
+                    if (session.pressureData) {
+                        for (let j = 0; j < session.pressureData.length; j++) {
+                            allPressureData.push(session.pressureData[j]);
+                        }
+                    }
                 }
             });
             // Set globals — these are used by showDetailOneMinute in FlowLimits.js
             window.dataArray = allFlowData.length > 0 ? allFlowData : null;
-            window.results = { idealArray: allIdealData, inspirations: concatenatedInspirations, flowImbalance: [] };
+            window.results = { 
+                idealArray: allIdealData, 
+                inspirations: concatenatedInspirations, 
+                flowImbalance: [],
+                pressureData: allPressureData 
+            };
 
             // Use duration-weighted nightly components for the labels on the left
             const resultsForHeatmap = {
                 inspirations: concatenatedInspirations,
                 cumIndex: nightlyWeighted,
                 idealArray: allIdealData,
-                flowImbalance: []
+                flowImbalance: [],
+                pressureData: allPressureData
             };
 
             // Set the global dataArray used by displayHeatMap's click handler
@@ -2111,6 +2124,7 @@
             // Build concatenated flow data for click-to-inspect
             const allFlowData = [];
             const allIdealData = [];
+            const allPressureData = [];
             sessions.forEach(session => {
                 if (session.flowData && session.flowData.length > 0) {
                     for (let j = 0; j < session.flowData.length; j++) {
@@ -2121,16 +2135,29 @@
                             allIdealData.push(session.idealData[j]);
                         }
                     }
+                    if (session.pressureData) {
+                        for (let j = 0; j < session.pressureData.length; j++) {
+                            allPressureData.push(session.pressureData[j]);
+                        }
+                    }
                 }
             });
             dataArray = allFlowData.length > 0 ? allFlowData : [];
+            window.dataArray = dataArray;
+            window.results = { 
+                idealArray: allIdealData, 
+                inspirations: concatenatedInspirations, 
+                flowImbalance: [],
+                pressureData: allPressureData 
+            };
 
             try {
                 displayHeatMap({
                     inspirations: concatenatedInspirations,
                     cumIndex: night.weightedGI,
                     idealArray: allIdealData,
-                    flowImbalance: []
+                    flowImbalance: [],
+                    pressureData: allPressureData
                 });
                 // Show detail section on heatmap click
                 const chartTopEl = document.getElementById('chartTop');
@@ -2268,15 +2295,29 @@
             window.startDateTime = new Date(session.startDateTime);
             window.dataArray = new Float32Array(Math.max(session.sampleCount || 1, 1));
 
-            // Calculate overall GI for this session
+            // Calulate overall GI for this session
             const gi = session.cumIndex;
             const overallGI = gi.skew + gi.spike + gi.flatTop + gi.topHeavy +
                 gi.multiPeak + gi.noPause + gi.inspirRate + gi.multiBreath + gi.ampVar;
 
             const cumIndexWithOverall = { ...gi, overall: Math.round(overallGI * 100) / 100 };
 
+            window.dataArray = session.flowData || [];
+            window.results = { 
+                idealArray: session.idealData || [], 
+                inspirations: session.inspirations || [], 
+                flowImbalance: [],
+                pressureData: session.pressureData || []
+            };
+
             try {
-                displayHeatMap({ inspirations: session.inspirations || [], cumIndex: cumIndexWithOverall });
+                displayHeatMap({ 
+                    inspirations: session.inspirations || [], 
+                    cumIndex: cumIndexWithOverall,
+                    idealArray: session.idealData || [],
+                    flowImbalance: [],
+                    pressureData: session.pressureData || []
+                });
                 // Show detail section on heatmap click
                 const chartTopEl = document.getElementById('chartTop');
                 if (chartTopEl) {
