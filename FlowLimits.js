@@ -921,11 +921,13 @@ function getOverallColourFromValue(indexValue) {
 	}
 }
 
-// When selected, output the detail graph for one minute of flow.  
 function showDetailOneMinute(dataArray, results, samplePos) {
-	if (chartDetail != null) {
+	if (window.chartDetail && typeof window.chartDetail.destroy === 'function') {
 		// clear a chart if one is already in view
-		chartDetail.destroy();
+		window.chartDetail.destroy();
+	}
+	if (window.chartDetailPressure && typeof window.chartDetailPressure.destroy === 'function') {
+		window.chartDetailPressure.destroy();
 	}
 
 	detailSampleSelected = samplePos;
@@ -961,76 +963,55 @@ function showDetailOneMinute(dataArray, results, samplePos) {
 		yAxisID: 'y',
 	}];
 
-	let pressureAxis = {};
-	if (results.pressureData && results.pressureData.length > 0) {
-		let pressureDataSlice = results.pressureData.slice(startPtr, endPtr);
-		chartDatasets.push({
-			label: 'Mask Pressure',
-			data: pressureDataSlice,
-			pointStyle: false,
-			borderColor: '#00cc66',
-			borderWidth: 1.5,
-			yAxisID: 'yPressure'
-		});
-		pressureAxis = {
-			yPressure: {
-				type: 'linear',
-				display: true,
-				position: 'right',
-				min: 0,
-				max: 20, // Typical pressure range
-				grid: { drawOnChartArea: false }, // Prevent gridline overlap
-			}
-		};
-	}
-
 	// prepare the chart for display
 	const ctx = document.getElementById('chartDetail');
 
-	chartDetail = new Chart(ctx, {
+	const handleBreathDetailClick = (event, elements, chart) => {
+		if (!elements || elements.length === 0) return;
+		
+		// Calculate the index in the original dataArray
+		const dataIndex = elements[0].index;
+		const actualDataIndex = startPtr + dataIndex;
+		
+		// Find the corresponding breath (inspiration)
+		const inspiration = results.inspirations.find(i => actualDataIndex >= i.start && actualDataIndex <= i.end);
+		if (inspiration) {
+			const timeStr = formatTimeWithAMPM(new Date(dataArray[actualDataIndex].x));
+			let msg = `Breath Details at ${timeStr}\n\n`;
+			msg += `GI Score: ${inspiration.indices?.overall || '0'}\n`;
+			
+			// Add flagged characteristics
+			const flags = [];
+			if (inspiration.indices?.skew) flags.push("Skewed");
+			if (inspiration.indices?.topHeavy) flags.push("Top Heavy");
+			if (inspiration.indices?.flatTop) flags.push("Flat Top");
+			if (inspiration.indices?.spike) flags.push("Spike");
+			if (inspiration.indices?.multiPeak) flags.push("Double Peak");
+			if (inspiration.indices?.noPause) flags.push("No Pause");
+			if (inspiration.indices?.inspirRate) flags.push("High Inspir Rate");
+			if (inspiration.indices?.multiBreath) flags.push("Double Insp");
+			if (inspiration.indices?.ampVar) flags.push("Variable Amp");
+			
+			if (flags.length > 0) {
+				msg += `Flags: ${flags.join(', ')}\n`;
+			}
+			
+			if (inspiration.peakPressure !== undefined && inspiration.peakPressure !== null) {
+				msg += `Peak Pressure: ${inspiration.peakPressure} cmH2O\n`;
+			}
+			
+			alert(msg);
+		}
+	};
+
+	window.chartDetail = new Chart(ctx, {
 		type: 'line',
 		data: {
 			datasets: chartDatasets,
 		},
 		options: {
 			maintainAspectRatio: false,
-			onClick: (event, elements, chart) => {
-				if (!elements || elements.length === 0) return;
-				
-				// Calculate the index in the original dataArray
-				const dataIndex = elements[0].index;
-				const actualDataIndex = startPtr + dataIndex;
-				
-				// Find the corresponding breath (inspiration)
-				const inspiration = results.inspirations.find(i => actualDataIndex >= i.start && actualDataIndex <= i.end);
-				if (inspiration) {
-					const timeStr = formatTimeWithAMPM(new Date(dataArray[actualDataIndex].x));
-					let msg = `Breath Details at ${timeStr}\n\n`;
-					msg += `GI Score: ${inspiration.indices?.overall || '0'}\n`;
-					
-					// Add flagged characteristics
-					const flags = [];
-					if (inspiration.indices?.skew) flags.push("Skewed");
-					if (inspiration.indices?.topHeavy) flags.push("Top Heavy");
-					if (inspiration.indices?.flatTop) flags.push("Flat Top");
-					if (inspiration.indices?.spike) flags.push("Spike");
-					if (inspiration.indices?.multiPeak) flags.push("Double Peak");
-					if (inspiration.indices?.noPause) flags.push("No Pause");
-					if (inspiration.indices?.inspirRate) flags.push("High Inspir Rate");
-					if (inspiration.indices?.multiBreath) flags.push("Double Insp");
-					if (inspiration.indices?.ampVar) flags.push("Variable Amp");
-					
-					if (flags.length > 0) {
-						msg += `Flags: ${flags.join(', ')}\n`;
-					}
-					
-					if (inspiration.peakPressure !== undefined && inspiration.peakPressure !== null) {
-						msg += `Peak Pressure: ${inspiration.peakPressure} cmH2O\n`;
-					}
-					
-					alert(msg);
-				}
-			},
+			onClick: handleBreathDetailClick,
 			scales: {
 				y: {
 					type: 'linear',
@@ -1039,7 +1020,6 @@ function showDetailOneMinute(dataArray, results, samplePos) {
 					min: -40,
 					max: 40,
 				},
-				...pressureAxis,
 				x: {
 					type: 'timeseries',
 					ticks: {
@@ -1050,6 +1030,49 @@ function showDetailOneMinute(dataArray, results, samplePos) {
 			},
 		},
 	});
+	
+	const ctxPressure = document.getElementById('chartDetailPressure');
+	if (ctxPressure && results.pressureData && results.pressureData.length > 0) {
+		let pressureDataSlice = results.pressureData.slice(startPtr, endPtr);
+		window.chartDetailPressure = new Chart(ctxPressure, {
+			type: 'line',
+			data: {
+				datasets: [{
+					label: 'Mask Pressure',
+					data: pressureDataSlice,
+					pointStyle: false,
+					borderColor: '#00cc66',
+					borderWidth: 1.5,
+					yAxisID: 'y'
+				}]
+			},
+			options: {
+				maintainAspectRatio: false,
+				onClick: handleBreathDetailClick,
+				scales: {
+					y: {
+						type: 'linear',
+						display: true,
+						position: 'left',
+						min: 0,
+						max: 20, // Typical pressure range
+						grid: { drawOnChartArea: true }, 
+					},
+					x: {
+						type: 'timeseries',
+						ticks: {
+							callback: dateTickFormat,
+						},
+					}
+
+				},
+			},
+		});
+		ctxPressure.parentElement.style.display = 'block';
+	} else if (ctxPressure) {
+		ctxPressure.parentElement.style.display = 'none';
+	}
+
 	// active the scroll buttons	
 	document.getElementById('backBtn').style.visibility = "visible";
 	document.getElementById('fwdBtn').style.visibility = "visible";
@@ -1057,8 +1080,11 @@ function showDetailOneMinute(dataArray, results, samplePos) {
 
 function clearDetailGraph() {
 	// clear the detail graph
-	if (chartDetail != null) {
-		chartDetail.destroy();
+	if (window.chartDetail && typeof window.chartDetail.destroy === 'function') {
+		window.chartDetail.destroy();
+	}
+	if (window.chartDetailPressure && typeof window.chartDetailPressure.destroy === 'function') {
+		window.chartDetailPressure.destroy();
 	}
 	// hide the back and forward buttons
 	document.getElementById('backBtn').style.visibility = "hidden";
